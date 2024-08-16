@@ -1,0 +1,60 @@
+node_modules
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# NuGet
+**/*.nupkg
+**/*.snupkg
+**/*.nuspec
+**/packages/
+!packages/repo/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Files built by Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.suo
+*.sln.docstates
+
+# User-specific files
+*.DS_Store
+*.swp
+
+# Logs
+*.log
+
+# Build results
+*.dll
+*.exe
+*.pdb
+*.cache
+*.dbmdl
+*.bak
+*.log
