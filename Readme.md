@@ -1,6 +1,6 @@
-# Mi Aplicación
+# USER MANAGEMENT
 
-Bienvenido a la documentación de mi aplicación. A continuación, encontrarás instrucciones para poner en marcha tanto el backend como el frontend de la aplicación.
+A continuación, encontrarás instrucciones para levantar la aplicacion.
 
 ## Requisitos Previos
 
@@ -13,15 +13,15 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
 
 ### 1. Clonar el repositorio
 
-1. Primero clonar el repositrio `my-app`:
+1. Primero clonar el repositorio `user-manegement`:
 
     ```bash
-    git clone my-app
+    git clone https://github.com/marcoastorojas/user-manegement
     ```
-2. Ingresar a la carpeta clonada `my-app`:
+2. Ingresar a la carpeta clonada:
 
     ```bash
-    cd my-app
+    cd user-manegement
     ```
 ### 2. Configuración del Backend con Docker
 
