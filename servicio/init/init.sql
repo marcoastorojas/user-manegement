@@ -24,7 +24,7 @@ VALUES (
     'Nombre', 
     'Apellido', 
     'UserName', 
-    'password', 
+    '$2a$10$6oa1nWxNqhMtSQ2Vt7CuDecPs8gh4m/algYhm3yS1sDgj/Ac2XfiC', 
     'prueba@gmail.com', 
     '987987987'
 );
