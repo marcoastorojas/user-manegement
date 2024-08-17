@@ -34,7 +34,7 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
 2. Levanta el backend junto con la base de datos utilizando Docker Compose en modo `detached` para no tener que mantener la terminal abierta:
 
     ```bash
-    docker compose up -d
+    docker compose up -d --build
     ```
 
    Esto iniciará los servicios definidos en el archivo `docker-compose.yml` en segundo plano.
@@ -66,7 +66,17 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
 ## Notas Adicionales
 
 - Asegúrate de que Docker esté en funcionamiento antes de intentar levantar los servicios del backend.
-
+- El usuario tiene las siguientes propiedades iniciales:
+    ```bash
+    {
+        firstName: 'Nombre', 
+        lastName: 'Apellido', 
+        userName: 'UserName', 
+        password: 'password', 
+        email: 'prueba@gmail.com', 
+        phoneNumber: '987987987'
+    }
+    ```
 ---
 
 ¡Gracias por usar mi aplicación! Si tienes alguna pregunta, no dudes en contactar conmigo.

@@ -1,14 +1,14 @@
 services:
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - ConnectionStrings__Default=Server=mysql_db;Database=mydb;User=user;Password=userpassword;
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__Default=Server=mysql_db;Database=mydb;User=user;Password=userpassword;
   db:
     image: mysql:latest
     container_name: mysql_db
