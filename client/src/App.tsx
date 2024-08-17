@@ -32,16 +32,16 @@ function App() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100vh', // Esto hace que el contenedor ocupe toda la altura de la pantalla
+              height: '100vh', 
             }}
           >
             <Button
               loading
               variant="plain"
               sx={{
-                width: '80%', // Aumentamos el ancho al 80%
-                height: '60px', // Hacemos el botón más alto
-                fontSize: '1.2rem', // Aumentamos el tamaño de la fuente
+                width: '80%', 
+                height: '60px', 
+                fontSize: '1.2rem', 
               }}
             >
               Cargando...

@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
 import AppBarComponent from "../../../Shared/Components/AppBar";
-import { Button, Box } from '@mui/joy';
 import { UserStore, UserStoreState } from '../../UserStore';
 import User from '../../Entities/User';
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar, VariantType } from 'notistack';
+import { SaveButton } from '../../../Shared/Components/SaveButton';
+import { InputLabelComponent } from '../../../Shared/Components/InputLabel';
 
 function ChangeUserNameComponent() {
     var user: User | undefined = UserStore((state:UserStoreState) => state.user)
     const ChangeUserName = UserStore(state => state.ChangeUserName);
     const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
 
     const [formData, setFormData] = useState({ UserName: user?.UserName});
-    const [loading, setLoading] = useState(false);
     
 
     const handleInputChange = (e: any) => {
@@ -25,49 +24,40 @@ function ChangeUserNameComponent() {
         }));
     };
 
-    const handleSubmit = async(e: any) => {
-        setLoading(true);
-        e.preventDefault();
-
+    const validateUserName = (): boolean => {
         if (!formData.UserName) {
             alert('El username es obligatorio');
-            return;
+            showSnackbar("El username es obligatorio", "warning");
+            return false;
         }
-        await ChangeUserName(formData.UserName);
-        setLoading(false);
-        navigate("/")
+        return true;
+    };
+
+    const showSnackbar = (message: string, variant: VariantType): void => {
+        enqueueSnackbar(message, { autoHideDuration: 2000, anchorOrigin: { horizontal: "right", vertical: "top" }, variant });
+    };
+
+    const handleSubmit = async(e: any) => {
+        e.preventDefault();
+
+        if (validateUserName()) { 
+
+            await ChangeUserName(formData.UserName!);
+            showSnackbar("Operacion Exitosa", "success");
+            navigate("/")
+         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <AppBarComponent title='UserName' backUrl="/"></AppBarComponent>
-            <FormControl sx={{ width: '70%', mx: 'auto' }}>
-                <FormLabel>User Name</FormLabel>
-                <Input
-                    name="UserName"
-                    value={formData.UserName}
-                    onChange={handleInputChange}
-                />
-            </FormControl>
-            <Box
-                sx={{
-                    position: 'fixed',
-                    bottom: 16,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '70%',
-                }}
-            >
-                <Button
-                    type="submit"
-                    color="success"
-                    variant="soft"
-                    fullWidth
-                    loading={loading}
-                >
-                    Save
-                </Button>
-            </Box>
+            <InputLabelComponent
+                label="User Name"
+                name="UserName"
+                value={formData.UserName!}
+                onChange={handleInputChange}
+            />
+            <SaveButton></SaveButton>
         </form>
     );
 }

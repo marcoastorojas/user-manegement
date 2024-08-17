@@ -1,66 +1,43 @@
-export class HttpProxy {
+import axios, { AxiosResponse } from 'axios';
 
+export class HttpProxy {
     public static async Get<T>(url: string): Promise<T> {
         try {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data: T = await response.json();
-
-            return data;
+            const response: AxiosResponse<T> = await axios.get(url);
+            return response.data;
         } catch (error) {
-            console.error("Error fetching user data:", error);
+            console.error("Error fetching data:", error);
             throw error;
         }
     }
 
-    public static async Update(url: string, body: any): Promise<any> {
+    public static async Update<T>(url: string, body: any): Promise<T> {
         try {
-            const response = await fetch(url, {
-                method: 'PUT',
+            const response: AxiosResponse<T> = await axios.put(url, body, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
+                }
             });
-    
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return await response.json();
-    
+            return response.data;
         } catch (error) {
             console.error("Error updating data:", error);
             throw error;
         }
     }
 
-    public static  async Post<T>(url: string, body: any): Promise<T> {
+    public static async Post<T>(url: string, body: any): Promise<T> {
         try {
-            const response = await fetch(url, {
-                method: 'POST',
+            const response: AxiosResponse<T> = await axios.post(url, body, {
                 headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-              });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data: T = await response.json();
-
-            return data;
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
         } catch (error) {
-            console.error("Error fetching user data:", error);
+            console.error("Error posting data:", error);
             throw error;
         }
     }
-
 }

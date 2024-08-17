@@ -31,11 +31,11 @@ export default function AppBarComponent({ title, backUrl }: { title: string, bac
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, textAlign: 'center', color: 'black' }}
+            sx={{ flexGrow: 1, textAlign: 'center', color: 'black', fontWeight: 'bold' }}
           >
             {title}
           </Typography>
-          {backUrl ?
+          {backUrl ?  
             <Box sx={{ width: 48 }} />  : null 
           }
           

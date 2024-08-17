@@ -33,7 +33,7 @@ export default function ItemSection(props: { title: string, value?: string, url?
                     }
                     subheader={
                         value ? 
-                        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        <Typography variant="caption" >
                             {value}
                         </Typography> 
                         : null

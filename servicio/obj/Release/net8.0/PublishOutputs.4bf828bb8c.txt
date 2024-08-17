@@ -1,0 +1,9 @@
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\servicio.exe
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\appsettings.Development.json
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\appsettings.json
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\servicio.dll
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\servicio.deps.json
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\servicio.runtimeconfig.json
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\servicio.pdb
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\Dapper.dll
+C:\Users\majew\projects\dotnet-react-user-management\servicio\out\MySqlConnector.dll

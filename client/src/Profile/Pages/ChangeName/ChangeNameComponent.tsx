@@ -1,15 +1,17 @@
-import  { useState } from 'react';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
+import { useState } from 'react';
 import AppBarComponent from "../../../Shared/Components/AppBar";
-import { Button, Box } from '@mui/joy';
 import { UserStore, UserStoreState } from '../../UserStore';
 import User from '../../Entities/User';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar, VariantType } from 'notistack';
+import { SaveButton } from '../../../Shared/Components/SaveButton';
+import { InputLabelComponent } from '../../../Shared/Components/InputLabel';
 
 function ChangeNameComponent() {
-    var user: User | undefined = UserStore((state:UserStoreState) => state.user)
+    var user: User | undefined = UserStore((state: UserStoreState) => state.user)
     const ChangeName = UserStore(state => state.ChangeName);
+    const {enqueueSnackbar} = useSnackbar();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         firstName: user?.FirstName,
@@ -24,54 +26,46 @@ function ChangeNameComponent() {
         }));
     };
 
-    const handleSubmit = (e: any) => {
+    const validateUserName = (): boolean => {
+        if (!formData.firstName || !formData.lastName) {
+            showSnackbar("Por favor, completa todos los campos", "warning");
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        if (!formData.firstName || !formData.lastName) {
-            alert('Por favor, completa todos los campos');
-            return;
+        if (validateUserName()) {
+            await ChangeName(formData.firstName!, formData.lastName!);
+            showSnackbar("Operacion Exitosa", "success");
+            navigate("/")
         }
 
-        ChangeName(formData.firstName, formData.lastName);
+    };
+
+    const showSnackbar = (message: string, variant: VariantType): void => {
+        enqueueSnackbar(message, { autoHideDuration: 2000, anchorOrigin: { horizontal: "right", vertical: "top" }, variant });
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <AppBarComponent title='Name' backUrl="/"></AppBarComponent>
-            <FormControl sx={{ width: '70%', mx: 'auto' }}>
-                <FormLabel>First Name</FormLabel>
-                <Input
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                />
-            </FormControl>
-            <FormControl sx={{ width: '70%', mx: 'auto', mt: 3 }}>
-                <FormLabel>Last Name</FormLabel>
-                <Input
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                />
-            </FormControl>
-            <Box
-                sx={{
-                    position: 'fixed',
-                    bottom: 16,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '70%',
-                }}
-            >
-                <Button
-                    type="submit"
-                    color="success"
-                    variant="soft"
-                    fullWidth
-                >
-                    Save
-                </Button>
-            </Box>
+            
+            <InputLabelComponent
+                label="First Name"
+                name="firstName"
+                value={formData.firstName!}
+                onChange={handleInputChange}
+            />
+            <InputLabelComponent
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName!}
+                onChange={handleInputChange}
+            />
+            <SaveButton></SaveButton>
         </form>
     );
 }

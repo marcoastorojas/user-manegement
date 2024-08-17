@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import User from './Entities/User'
 import { HttpProxy } from '../helpers/HttpProxy'
-import UserDto from './Entities/UserDto'
+import {UserDto, UserMapper} from './Entities/UserDto'
 
 export interface UserStoreState
 {
@@ -9,20 +9,23 @@ export interface UserStoreState
     getPrincipalUser(): Promise<void>;
     ChangeUserName: (userName: string) => Promise<void>;
     ChangeName: (firstName: string, lastName:string) => Promise<void>;
-    ChangePassword : (userName: string) => Promise<void>
+    ChangePassword : (current:string, password: string) => Promise<void>
 }
 
+export interface ResposeErrorApi
+{
+    messageError:string;
+}
 
 export const UserStore = create<UserStoreState>((set) => 
 ({
-    user: new User("primer nombre", "apellido","userName","123123123","email","987987978"),
+    user: undefined,
     getPrincipalUser: async() => {
-        var user2 = new User("nombre user2", "apellido user2","userName","123123123","email","987987978")
-        // var principalUser = await HttpProxy.Get<UserDto>("http://localhost:8080");
-         set((state:UserStoreState) => ({ ...state, user:user2 }))
+        var principalUser = await HttpProxy.Get<UserDto>("http://localhost:8080/api/user");
+        set((state:UserStoreState) => ({ ...state, user:UserMapper.toUser(principalUser) }))
     },
     ChangeUserName: async (userName: string) =>  {
-        // await HttpProxy.Update("http://localhost:8080/userName",{ userName });
+        await HttpProxy.Update("http://localhost:8080/api/user/userName",{ userName });
         set((state:UserStoreState) => {
             var currentUser = state.user;
             currentUser?.chageUserName(userName);
@@ -30,7 +33,7 @@ export const UserStore = create<UserStoreState>((set) =>
         })
     },
     ChangeName: async (firstName: string, lastName: string) =>  {
-        // await HttpProxy.Update("http://localhost:8080/name",{ firstName, lastName });
+        await HttpProxy.Update("http://localhost:8080/api/user/name",{ firstName, lastName });
         set((state:UserStoreState) => {
             var currentUser = state.user;
             currentUser?.changeFirstName(firstName);
@@ -38,12 +41,13 @@ export const UserStore = create<UserStoreState>((set) =>
             return { ...state, user:currentUser }
         })
     },
-    ChangePassword: async (password: string) =>  {
-        // await HttpProxy.Update("http://localhost:8080/password",{ password });
+    ChangePassword: async (current:string, password: string) =>  {
+         await HttpProxy.Update("http://localhost:8080/api/user/password",{ current, password });
         set((state:UserStoreState) => {
             var currentUser = state.user;
             currentUser?.changePassword(password);
             return { ...state, user:currentUser }
         })
+        
     }
 }))
